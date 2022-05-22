@@ -89,11 +89,9 @@ export default class StarterApp extends App {
     super(props);
 
     this._pageContext = getPageContext();
-    // https://github.com/emotion-js/emotion/blob/108d78aa176aedfddc0854ebe4049847a9ac2a9b/docs/ssr.md#hydrate
     if (typeof window !== 'undefined') {
       hydrate(window.__NEXT_DATA__.ids);
 
-      // Use global to prevent adding insertion points on hot reload
       if (!global.__INIT_MATERIAL_UI_JSS__) {
         global.__INIT_MATERIAL_UI_JSS__ = createJss(jssPreset());
 
@@ -114,7 +112,6 @@ export default class StarterApp extends App {
   }
 
   componentDidMount() {
-    // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles && jssStyles.parentNode) {
       jssStyles.parentNode.removeChild(jssStyles);
@@ -122,13 +119,7 @@ export default class StarterApp extends App {
   }
 
   render() {
-    const {
-      // version,
-      Component,
-      pageProps,
-      relayProps,
-      router,
-    } = this.props;
+    const { Component, pageProps, relayProps, router } = this.props;
 
     const isHMR = pageProps === undefined;
     if (isHMR) return null;
